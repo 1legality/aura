@@ -1,0 +1,70 @@
+<div id="drop_zone" (dragover)="handleDragOver($event)" (drop)="handleDrop($event)">
+  <div class="container">
+    <h1 class="text-center">Setup</h1>
+
+    <label class="btn btn-primary btn-lg btn-block" (click)="playMedias()">
+      Play
+    </label>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="savedPlaylists">Saved playlist</label>
+          <select class="form-control" id="savedPlaylists" (click)="changeSavedPlaylist($event)">
+            <option [selected]="selected === ''"></option>
+            <option *ngFor="let playlist of playlists" [selected]="selected === playlist">{{playlist}}</option>
+          </select>
+        </div>
+        <app-save-playlist [title]="selected" [disabled]="files.length === 0" (titleGiven)="save($event)"></app-save-playlist>
+
+        <button class="btn btn-primary" [disabled]="selected === ''" (click)="removeSavedPlaylist()">
+          Delete selected
+        </button>
+
+        <button class="btn btn-primary float-right" (click)="emptyPlaylist()">
+          Empty Playlist
+        </button>
+      </div>
+    </div>
+
+    <label for="files" class="btn btn-primary btn-lg btn-block">
+      Drop files here
+    </label>
+
+    <input type="file" id="files" name="files[]" multiple style="display: none" (change)="handleFileButton($event)">
+
+    <ng-template #popContent>positive value : value in seconds<br>0 : keep media indefinitely<br>negative value : skip media entirely</ng-template> <!--ngbPopover content-->
+    <ul class="list-group">
+      <div [sortablejs]="files">
+        <li *ngFor="let file of files; let i = index"
+            class="list-group-item d-flex justify-content-between align-items-center">
+
+          <div id="file" style="width: 125px;">
+            <app-preview [file]=file></app-preview>
+          </div>
+
+          <div id="{{i}}-fileName" style="min-width:40%; max-width: 40%;">
+            {{file.name}}
+          </div>
+
+          <div *ngIf="file.type.indexOf('video') === -1" style="margin-right: 50px">
+            <input [ngModel]="file.duration" type="number" class="number" name="item"
+                   (change)="changeSecs($event, i)"
+                   [ngbPopover]="popContent"
+                   triggers="mouseenter:mouseleave"
+                   popoverTitle="Media Duration"
+                   min="-1"> secs
+          </div>
+
+          <div *ngIf="file.type.indexOf('video') !== -1" style="margin-right: 50px">
+            <input [ngModel]="file.duration" type="number" class="number" disabled> secs
+          </div>
+
+          <div (click)="removefile(i)" id="remove" style="cursor: pointer; position: absolute; top: 1em; right: 1em">
+            X
+          </div>
+        </li>
+      </div>
+    </ul>
+  </div>
+</div>

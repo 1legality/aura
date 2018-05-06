@@ -1,0 +1,33 @@
+<div style="background: #0d0d0d" class="container-fluid window">
+  <div
+       *ngIf="window.one.visible && window.one.file.type.indexOf('video') !== -1 || window.one.file.type.indexOf('video') === -1"
+       [style.z-index]="window.one.visible ? 20 : 10"
+       [style.background]="window.one.file.type.indexOf('text') === -1 ? '#000000' : ''"
+       style="position: absolute; width: 100%; height: 100%; left: 0; right: 0; top: 0; bottom: 0;"
+       [innerHTML]="window.one.innerHTML"></div>
+  <div
+       *ngIf="window.two.visible && window.two.file.type.indexOf('video') !== -1 || window.two.file.type.indexOf('video') === -1"
+       [style.z-index]="window.two.visible ? 20 : 10"
+       [style.background]="window.two.file.type.indexOf('text') === -1 ? '#000000' : ''"
+       style="position: absolute; width: 100%; height: 100%; left: 0; right: 0; top: 0; bottom: 0;"
+       [innerHTML]="window.two.innerHTML"></div>
+</div>
+
+<ngb-alert
+  [dismissible]="false"
+  *ngIf="notificationMessage"
+  type="warning"
+  class="align-items-center"
+  style="position: absolute; bottom: 0; width: 100%; padding-bottom: 5px; z-index: 1000"
+  (close)="notificationMessage = null">
+  <span [innerHTML]="notificationMessage"></span>
+</ngb-alert>
+
+<!--class="h-100 justify-content-center align-items-center"-->
+
+<!--style="position: absolute; width: 0px; height: 0px"-->
+<!--[style.position]="window.one.visible ? 'absolute' : ''"
+       [style.width]="window.one.visible ? '0px' : ''"
+       [style.height]="window.one.visible ? '0px' : ''"-->
+
+<!--       [style.display]="window.one.visible ? 'none' : 'block'" -->

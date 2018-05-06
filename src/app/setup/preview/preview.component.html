@@ -1,0 +1,52 @@
+<ng-template #content let-c="close" let-d="dismiss" style="max-height: 90%">
+  <div class="modal-header">
+    <h4 class="modal-title">{{file.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body row h-100 justify-content-center align-items-center">
+    <img *ngIf="file.type.indexOf('image') !== -1"
+         [src]="sanitizer.bypassSecurityTrustResourceUrl(file.path)"
+         class="img-fluid"
+         style="max-width: 80%">
+
+    <vg-player *ngIf="file.type.indexOf('video') !== -1" class="img-fluid" style="max-width: 80%">
+      <video [vgMedia]="media" #media id="singleVideo"
+             preload="auto"
+             autoplay loop >
+        <source [src]="sanitizer.bypassSecurityTrustResourceUrl(file.path)" type={{file.type}}>
+      </video>
+    </vg-player>
+
+    <iframe *ngIf="file.type.indexOf('text') !== -1"
+            [src]="sanitizer.bypassSecurityTrustResourceUrl(file.path)"
+            frameborder="0"
+            scrolling="no"
+            width="640px"
+            height="480px">
+    </iframe>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<img *ngIf="file.type.indexOf('image') !== -1"
+     [src]="sanitizer.bypassSecurityTrustResourceUrl(file.path)"
+     class="img-thumbnail"
+     style="max-width:125px"
+     (click)="openVerticallyCentered(content)">
+
+<vg-player *ngIf="file.type.indexOf('video') !== -1">
+  <video
+    [vgMedia]="media" #media id="singleVideo"
+    preload="auto"
+    (click)="openVerticallyCentered(content)">
+    <source [src]="sanitizer.bypassSecurityTrustResourceUrl(file.path)" type={{file.type}}>
+  </video>
+</vg-player>
+
+<div *ngIf="file.type.indexOf('text') !== -1" (click)="openVerticallyCentered(content)">{{file.type}}</div>

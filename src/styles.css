@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+app-setup, app-player {
+  height: 100%;
+  overflow:auto
+}
+
+undefined {
+  flex: 1;
+}
+
+body, html, app-root {
+  height: 100%;
+}
+
+app-root{
+  display: flex;
+  flex-flow: column;
+}

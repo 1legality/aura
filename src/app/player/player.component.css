@@ -1,0 +1,12 @@
+.window {
+  height: 100%;
+}
+
+.row-fluid {height: 100%; display:table-cell; vertical-align: middle;}
+
+.centering {
+  height: 100%;
+  float:none;
+  margin:0 auto;
+  vertical-align: middle;
+}
